@@ -1,0 +1,55 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+
+<div class="well well-lg">业务线管理</div>
+<form action="/resource/business_detail/" method="post">
+<input type="hidden" name="business_id" value='{{ business.id }}' >
+<input type="hidden" name="type" value='mod' >
+
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="business_name" placeholder='NAME' style="width:200px;" maxlength=20 value='{{ business.name }}' readonly= {{ readonly }}>
+	</div>
+	<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="business_owner"  placeholder='OWNER' style="width:200px;" maxlength=2 value='{{ business.owner }}' readonly= {{ readonly }}>
+</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="business_phone" placeholder='PHONE' style="width:200px;" maxlength=20 value='{{ business.phone }}' readonly= {{ readonly }} >
+</div>
+<br>
+<button type="button" class="btn btn-default btn" onclick="change_readonly('all')">
+  		<span class="glyphicon glyphicon-wrench"></span>编辑
+</button>
+<button type="submit" class="btn btn-default btn" id='commit' disabled="disabled">
+  		<span class="glyphicon glyphicon-ok"></span> 提交
+</button>
+
+{% csrf_token %}
+</form>
+<br>
+<form action="/resource/business_detail/" method="post">
+	<input type="hidden" name="business_id" value='{{ business.id }}' >
+	<input type="hidden" name="type" value='del' >
+	
+	<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-trash"></span> {{ stat_action }}线业务线
+	</button>
+	{% csrf_token %}
+</form>
+<script>
+function change_readonly(id){
+	if (id == 'all')
+	{
+	    var arrAll=document.all;  
+	    for (i=0;i <arrAll.length;i++)  
+	    	arrAll[i].readOnly= false		
+	}
+	var btn_submit=document.getElementById("commit");  
+    btn_submit.disabled='';
+}
+</script>
+{% endblock %}

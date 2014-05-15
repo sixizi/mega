@@ -1,0 +1,64 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+
+<div class="well well-lg">服务器基本信息管理</div>
+<form action="/resource/server_detail/" method="post">
+<input type="hidden" name="server_id" value='{{ server.id }}' >
+<input type="hidden" name="type" value='mod' >
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_name" placeholder='NAME' style="width:200px;" maxlength=20 value='{{ server.name }}' readonly= {{ readonly }}>
+	</div>
+	<br>
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control"  name="server_ip" placeholder= "IP" style="width:200px;" maxlength=15 value='{{ server.ip }}' readonly= {{ readonly }} >
+	</div>
+	<br>
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_os" placeholder='OS' style="width:200px;" maxlength=20 value='{{ server.os }}' readonly= {{ readonly }} >
+	</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="server_owner"  placeholder='owner' style="width:200px;" maxlength=20 value='{{ server.owner }}' readonly= {{ readonly }}>
+</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="server_online" placeholder='ONLINE_DATE' value='{{ server.online_date }}' style="width:200px;" maxlength=20  readonly= '{{ readonly }}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})">
+</div>
+<br>
+<button type="button" class="btn btn-default btn" onclick="change_readonly('all')">
+  		<span class="glyphicon glyphicon-wrench"></span>编辑
+</button>
+<button type="submit" class="btn btn-default btn" disabled="disabled" id='commit'>
+  		<span class="glyphicon glyphicon-ok"></span> 提交
+</button>
+
+{% csrf_token %}
+</form>
+<br>
+<form action="/resource/server_detail/" method="post">
+	<input type="hidden" name="server_id" value='{{ server.id }}' >
+	<input type="hidden" name="type" value='del' >
+	
+	<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-trash"></span> {{ stat_action }}线服务器
+	</button>
+	{% csrf_token %}
+</form>
+<script>
+function change_readonly(id){
+	if (id == 'all')
+	{
+	    var arrAll=document.all;  
+	    for (i=0;i <arrAll.length;i++)  
+	    	arrAll[i].readOnly= false		
+	}
+	var btn_submit=document.getElementById("commit");  
+    btn_submit.disabled=''; 
+}
+</script>
+{% endblock %}

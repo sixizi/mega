@@ -1,0 +1,42 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+<div class="well well-lg">快速添加实例</div>
+<form action="/resource/instance_add/" method="post">
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="instance_name" placeholder="NAME" style="width:200px;" maxlength=15>
+	</div>
+	<br>
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="instance_ip" placeholder="IP" style="width:200px;" maxlength=15>
+	</div>
+	<br>
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="instance_port" placeholder="PORT" style="width:200px;" maxlength=6>
+	</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="instance_level" placeholder="LEVEL" style="width:200px;" maxlength=2>
+</div>
+<br>
+<div class="input-group">
+	<span class="input-group-addon">*</span>
+	<select name="instance_bussiness" class="form-control" style="width:200px;">
+		{% for bus in business_list %}
+		   <option value={{ bus.id }}>{{ bus.name }}</option>
+		{% endfor %}
+	</select> 	
+</div>
+<br>
+<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-plus"></span> 添加
+</button>
+{% csrf_token %}
+</form>
+<br>
+<div class="well well-sm" style="width:200px">提示信息：{{ msg }}</div>
+<!--  <div class="alert alert-success">{{ msg }}</div> -->
+{% endblock %}

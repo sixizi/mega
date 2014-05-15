@@ -1,0 +1,56 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+<form action="/resource/server_add/" method="get">
+	<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-plus"></span> 添加
+	</button>
+	{% csrf_token %}
+</form>
+<br>
+<form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search...">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+<br>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th>NAME</th>
+        <th>IP</th>
+        <th>OS</th>
+        <th>OWNER</th>
+        <th>ONLINE</th>
+        <th>STAT</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for server in server_list %}
+	     <tr>
+	     	<td><a href="/resource/server_detail?server_id={{ server.id }}">{{ server.name }}</a></td>
+			<td><a href="/resource/server_detail?server_ip={{ server.ip }}">{{ server.ip }}</a></td>
+			<td> {{ server.os }} </td>
+			<td><a href="/resource/server_detail?user_id={{ server.owner }}">{{ server.owner }}</a></td>
+			<td>{{ server.online_date }}</td>
+			<td> {{ server.stat }} </td>
+			<td>
+					<span class="glyphicon glyphicon-cog"></span> 
+			</td>
+         </tr>
+	   {% endfor %}
+     </tbody>
+  </table>
+</div>
+<ul class="pagination">
+  <li><a href="#">&laquo;</a></li>
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#">&raquo;</a></li>
+</ul>
+<span class="glyphicon glyphicon-search"></span>
+{% endblock %}

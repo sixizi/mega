@@ -1,0 +1,59 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+<form action="/resource/database_add/" method="get">
+	<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-plus"></span> 添加
+	</button>
+	{% csrf_token %}
+</form>
+<br>
+<form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search...">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+<hr>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th>NAME</th>
+      	<th>IP</th>
+        <th>PORT</th>
+        <th>LEVEL</th>
+        <th>OWNER</th>
+        <th>BUSINESS</th>
+        <th>STAT</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for database in database_list %}
+	     <tr>
+	     	<td><a href="/resource/database_detail?database_id={{ database.id }}">{{ database.name }}</a></td>
+	     	<td><a href="/resource/server_detail?server_ip={{ database.ip }}">{{ database.ip }}</a></td>
+	     	<td><a href="/resource/instance_detail?instance_id={{ database.instance_id }}">{{ database.port }}</a></td>
+	     	<td>{{ database.level }}</td>
+			<td><a href="/resource/user_detail?user_id={{ database.owner }}">{{ database.owner }}</a></td>
+			<td><a href="/resource/business_detail?business_id={{ database.business_id }}">{{ database.business }}</a></td>
+			<td> {{ database.stat }} </td>
+			<td>
+					<span class="glyphicon glyphicon-cog"></span> 
+			</td>
+         </tr>
+	   {% endfor %}
+     </tbody>
+  </table>
+</div>
+<ul class="pagination">
+  <li><a href="#">&laquo;</a></li>
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#">&raquo;</a></li>
+</ul>
+<span class="glyphicon glyphicon-search"></span>
+{% endblock %}

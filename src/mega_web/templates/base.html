@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico	" type="image/x-icon" />
+  	
+  	<script language="javascript" type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
+  	
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/boot.css" rel="stylesheet">
+    <link href="/static/dashboard.css" rel="stylesheet">
+    
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      	<div class="container-fluid">
+        	<div class="navbar-header">
+          		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            		<span class="sr-only">Toggle navigation</span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+          		</button>
+          <!--  		<a class="navbar-brand" href="/"></a>-->
+        	</div>
+        	<div class="navbar-collapse collapse">
+        		<ul class="nav navbar-nav navbar-right">
+            		<li><a href="/">Dashboard</a></li>
+            		<li><a href="/resource">资源池</a></li>
+            		<li><a href="/backup">备份</a></li>
+            		<li><a href="/portal">传送门</a></li>
+          		</ul>
+          		<form class="navbar-form navbar-left">
+            		<input type="text" class="form-control" placeholder="Mega...">
+          		</form>
+        	</div>
+      	</div>
+    </div>
+ 	{% block content %}
+    {% endblock %}
+  <footer>
+  </footer>  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins)--> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>   
+ <!--     <script src="http://code.jquery.com/jquery.js"></script>  
+ -->     
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/docs.min.js"></script>
+  </body>
+  
+</html>

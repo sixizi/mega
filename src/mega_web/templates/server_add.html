@@ -1,0 +1,42 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+<div class="well well-lg">快速添加服务器</div>
+<form action="/resource/server_add/" method="post">
+	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_name" placeholder="NAME" style="width:200px;" maxlength=15>
+  	</div>
+  	<br>
+  	<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_ip" placeholder="IP" style="width:200px;" maxlength=15>
+	</div>
+<br>
+<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_online" placeholder="ONLINE_DATE" style="width:200px;" maxlength=20 onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})" readonly='readonly'>
+</div>
+<br>
+<div class="input-group">
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control" name="server_owner" placeholder="OWNER" style="width:200px;" maxlength=6>
+</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="server_os" placeholder="OS" style="width:200px;" maxlength=10>
+</div>
+<br>
+<!--  
+<div class="input-group">
+  <span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="server_bussiness" placeholder="BUSSINESS" style="width:200px;" maxlength=20>
+</div>
+-->
+<br>
+<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-plus"></span> 添加
+</button>
+{% csrf_token %}
+</form>
+{% endblock %}

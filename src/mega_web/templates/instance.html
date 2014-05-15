@@ -1,0 +1,75 @@
+{% extends "resource_base.html" %}
+{% block subcontent %}
+<form action="/resource/instance_add/" method="get">
+	<button type="submit" class="btn btn-default btn">
+  		<span class="glyphicon glyphicon-plus"></span> 添加
+	</button>
+	{% csrf_token %}
+</form>
+<br>
+<form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search...">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+<br>
+<!--  
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+-->
+<!--
+<h2 class="sub-header">Server List</h2> 
+-->
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th>NAME</th>
+        <th>IP</th>
+        <th>PORT</th>
+        <th>ROLE</th>
+        <th>LEVEL</th>
+        <th>OWNER</th>
+        <th>STAT</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for instance in instance_list %}
+	     <tr>
+	     	<td><a href="/resource/instance_detail?instance_id={{ instance.id }}">{{ instance.name }}</a></td>
+			<td><a href="/resource/server_detail?server_ip={{ instance.ip }}">{{ instance.ip }}</a></td>
+			<td> {{ instance.port }} </td>
+			<td> {{ instance.role }} </td>
+			<td> {{ instance.level }} </td>
+			<td><a href="/ip_detail?ip={{ server.3 }}">{{ instance.owner }}</a></td>
+			<td> {{ instance.stat }} </td>
+			<td>
+					<span class="glyphicon glyphicon-cog"></span> 
+			</td>
+         </tr>
+	   {% endfor %}
+     </tbody>
+  </table>
+</div>
+<ul class="pagination">
+  <li><a href="#">&laquo;</a></li>
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#">&raquo;</a></li>
+</ul>
+<span class="glyphicon glyphicon-search"></span>
+{% endblock %}
