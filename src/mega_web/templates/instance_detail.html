@@ -8,29 +8,41 @@
 	<div class="input-group">
 		<span class="input-group-addon">*</span>
   		<input type="text" class="form-control" name="instance_name" placeholder='NAME' style="width:200px;" maxlength=20 value='{{ instance.name }}' readonly= {{ readonly }}>
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control"  name="instance_db_type" placeholder= "TYPE" style="width:200px;" maxlength=15 value='{{ instance.db_type }}' readonly= {{ readonly }} >
+  		
   	</div>
   	<br>
 	<div class="input-group">
   		<span class="input-group-addon">*</span>
   		<input type="text" class="form-control"  name="instance_ip" placeholder= "IP" style="width:200px;" maxlength=15 value='{{ instance.ip }}' readonly= {{ readonly }} >
+  		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control"  name="instance_owner" placeholder= "OWNER" style="width:200px;" maxlength=15 value='{{ instance.owner_name }}' readonly= {{ readonly }} >
   		
 	</div>
 	<br>
 	<div class="input-group">
   		<span class="input-group-addon">*</span>
   		<input type="text" class="form-control" name="instance_port" placeholder='PORT' style="width:200px;" maxlength=6 value='{{ instance.port }}' readonly= {{ readonly }} >
+		<span class="input-group-addon">*</span>
+  		<input type="text" class="form-control"  name="instance_ha_type" placeholder= "HA_TYPE" style="width:200px;" maxlength=15 value='{{ instance.ha_type }}' readonly= {{ readonly }} >
+  		
 	</div>
 <br>
 <div class="input-group">
   <span class="input-group-addon">*</span>
   <input type="text" class="form-control" name="instance_level"  placeholder='LEVEL' style="width:200px;" maxlength=2 value='{{ instance.level }}' readonly= {{ readonly }}>
+  <span class="input-group-addon">*</span>
+  <input type="datetime" class="form-control" name="instance_online" placeholder='ONLINE_DATE' style="width:200px;" maxlength=20 value='{{ instance.online_date|date:"Y-m-d H:i:s" }}' readonly= {{ readonly }} >
+
 </div>
 <br>
 <div class="input-group">
   <span class="input-group-addon">*</span>
-  <input type="text" class="form-control" name="instance_bussiness" placeholder='BUSINESS' style="width:200px;" maxlength=20 value='{{ instance.bussiness }}' readonly= {{ readonly }} >
+  <input type="text" class="form-control" name="instance_bussiness" placeholder='BUSINESS' style="width:200px;" maxlength=20 value='{{ instance.business }}' readonly= {{ readonly }} >
 </div>
 <br>
+
 <button type="button" class="btn btn-default btn" onclick="change_readonly('all')">
   		<span class="glyphicon glyphicon-wrench"></span>编辑
 </button>

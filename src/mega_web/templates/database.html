@@ -13,7 +13,6 @@
   </div>
   <button type="submit" class="btn btn-default">Search</button>
 </form>
-<hr>
 
 <div class="table-responsive">
   <table class="table table-striped">
@@ -35,7 +34,7 @@
 	     	<td><a href="/resource/server_detail?server_ip={{ database.ip }}">{{ database.ip }}</a></td>
 	     	<td><a href="/resource/instance_detail?instance_id={{ database.instance_id }}">{{ database.port }}</a></td>
 	     	<td>{{ database.level }}</td>
-			<td><a href="/resource/user_detail?user_id={{ database.owner }}">{{ database.owner }}</a></td>
+			<td><a href="/resource/user_detail?user_id={{ database.owner }}">{{ database.owner_name }}</a></td>
 			<td><a href="/resource/business_detail?business_id={{ database.business_id }}">{{ database.business }}</a></td>
 			<td> {{ database.stat }} </td>
 			<td>

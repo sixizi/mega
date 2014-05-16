@@ -52,8 +52,9 @@ def instance_add(request):
     else:
         result,msg=instance_manage.InstanceManage(request.POST).add_instance()
         if result:
-            msg='Sucess'    
-        return render_to_response('instance_add.html',{"msg":msg},context_instance=RequestContext(request))
+            msg='Sucess'  
+        business_list=business_manage.BusinessGet().get_business_list(None).values("id","name")  
+        return render_to_response('instance_add.html',{"msg":msg,"business_list":business_list},context_instance=RequestContext(request))
 def instance_detail(request):
     if request.method=="GET":
         instance=instance_manage.InstanceGet().get_instance(request.GET)
@@ -110,8 +111,8 @@ def business_add(request):
     if request.method=="GET":
         return render_to_response('business_add.html',context_instance=RequestContext(request))
     else:
-        business_manage.BusinessManage(request.POST).add_business()
-        return render_to_response('business_add.html',context_instance=RequestContext(request))
+        result,msg=business_manage.BusinessManage(request.POST).add_business()
+        return render_to_response('business_add.html',{"msg":msg},context_instance=RequestContext(request))
 def business_detail(request):
     if request.method=="GET":
         business=business_manage.BusinessGet().get_business(request.GET)
@@ -131,28 +132,28 @@ def business_detail(request):
 #database
 def database(request):
     if request.method=="GET":
-        database_list=database_manage.databaseGet().get_database_list(None, 10)
+        database_list=database_manage.DatabaseGet().get_database_list(None, 10)
         return render_to_response('database.html',{"database_list":database_list},context_instance=RequestContext(request))
     else:
         return render_to_response('server.html')
 def database_add(request):
+    instance_list=instance_manage.InstanceGet().get_instance_list(None) #.values("id","ip","port")
+    business_list=business_manage.BusinessGet().get_business_list(None).values("id","name")
     if request.method=="GET":
-        instance_list=instance_manage.InstanceGet().get_instance_list(None).values("id","ip","port")
-        business_list=business_manage.BusinessGet().get_business_list(None).values("id","name")
         return render_to_response('database_add.html',{"instance_list":instance_list,"business_list":business_list},context_instance=RequestContext(request))
     else:
-        database_manage.databaseManage(request.POST).add_database()
-        return render_to_response('database_add.html',context_instance=RequestContext(request))
+        (result,msg)=database_manage.DatabaseManage(request.POST).add_database()
+        return render_to_response('database_add.html',{"msg":msg,"instance_list":instance_list,"business_list":business_list},context_instance=RequestContext(request))
 def database_detail(request):
     if request.method=="GET":       
-        database=database_manage.databaseGet().get_database(request.GET)
+        database=database_manage.DatabaseGet().get_database(request.GET)
     else:
         if request.POST.get("type")=="mod":
-            database_manage.databaseManage(request.POST).mod_database()
-            database=database_manage.databaseGet().get_database(request.POST)
+            database_manage.DatabaseManage(request.POST).mod_database()
+            database=database_manage.DatabaseGet().get_database(request.POST)
         else:
-            database_manage.databaseManage(request.POST).stat_database()
-            database=database_manage.databaseGet().get_database(request.POST)
+            database_manage.DatabaseManage(request.POST).stat_database()
+            database=database_manage.DatabaseGet().get_database(request.POST)
     if database.get("stat")==1:
         stat_action='下'
     else:

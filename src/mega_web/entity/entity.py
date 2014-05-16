@@ -21,7 +21,7 @@ class Instance(models.Model):
     server_id =  models.IntegerField(null=False)
     ip = models.CharField(max_length=20)    
     port = models.IntegerField(null=False)
-    onwer =  models.IntegerField(default=0)
+    owner =  models.IntegerField(default=0)
     level = models.IntegerField(default=1)
     business_id = models.IntegerField(default=0)
     #mysql oracle etc
@@ -30,6 +30,8 @@ class Instance(models.Model):
     ha_type = models.CharField(max_length=10)
     
     stat= models.IntegerField(default=1)
+    online_date = models.DateTimeField(default=0)
+
 
 class Database(models.Model):
     class Meta(object):
@@ -42,6 +44,8 @@ class Database(models.Model):
     level = models.IntegerField()
     owner = models.IntegerField()
     stat= models.IntegerField(default=1)
+    online_date = models.DateTimeField(default=0)
+
 
 class User(models.Model):
     class Meta(object):

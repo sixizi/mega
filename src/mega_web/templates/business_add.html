@@ -9,12 +9,12 @@
   	<br>
 <div class="input-group">
   		<span class="input-group-addon">*</span>
-  		<input type="text" class="form-control" name="business_owner" placeholder="OWNER" style="width:200px;" maxlength=6>
+  		<input type="text" class="form-control" name="business_owner" placeholder="OWNER" style="width:200px;" maxlength=15>
 </div>
 <br>
 <div class="input-group">
   <span class="input-group-addon">*</span>
-  <input type="text" class="form-control" name="business_phone" placeholder="PHONE" style="width:200px;" maxlength=10>
+  <input type="text" class="form-control" name="business_phone" placeholder="PHONE" style="width:200px;" maxlength=11>
 </div>
 <br>
 <!--  
@@ -29,4 +29,7 @@
 </button>
 {% csrf_token %}
 </form>
+<br>
+<div class="well well-sm" style="width:200px">提示信息：{{ msg }}</div>
+
 {% endblock %}

@@ -28,12 +28,9 @@
        {% for business in business_list %}
 	     <tr>
 	     	<td><a href="/resource/business_detail?business_id={{ business.id }}">{{ business.name }}</a></td>
-			<td><a href="/resource/business_detail?user_id={{ business.owner }}">{{ business.owner }}</a></td>
+			<td><a href="/resource/user_detail?user_id={{ business.owner }}">{{ business.owner_name }}</a></td>
 			<td>{{ business.phone }}</td>
 			<td> {{ business.stat }} </td>
-			<td>
-					<span class="glyphicon glyphicon-cog"></span> 
-			</td>
          </tr>
 	   {% endfor %}
      </tbody>
@@ -48,5 +45,4 @@
   <li><a href="#">5</a></li>
   <li><a href="#">&raquo;</a></li>
 </ul>
-<span class="glyphicon glyphicon-search"></span>
 {% endblock %}

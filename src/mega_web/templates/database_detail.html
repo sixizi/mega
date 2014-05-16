@@ -8,11 +8,8 @@
 <div class="input-group">
   		<span class="input-group-addon">*</span>
   		<input type="text" class="form-control" name="database_name" placeholder='NAME' style="width:200px;" maxlength=20 value='{{ database.name }}' readonly= {{ readonly }}>
-	</div>
-	<br>
-<div class="input-group">
-  <span class="input-group-addon">*</span>
-  <input type="text" class="form-control" name="database_owner"  placeholder='OWNER' style="width:200px;" maxlength=2 value='{{ database.owner }}' readonly= {{ readonly }}>
+	<span class="input-group-addon">*</span>
+  <input type="text" class="form-control" name="database_owner"  placeholder='OWNER' style="width:200px;" maxlength=2 value='{{ database.owner_name }}' readonly= {{ readonly }}>
 </div>
 <br>
 <div class="input-group">
@@ -33,6 +30,9 @@
 <div class="input-group">
   <span class="input-group-addon">*</span>
   <input type="text" class="form-control" name="database_business" placeholder='BUSINESS' style="width:200px;" maxlength=20 value='{{ database.business }}' readonly= {{ readonly }} >
+  <span class="input-group-addon">*</span>
+  <input type="datetime" class="form-control" name="instance_online" placeholder='ONLINE_DATE' style="width:200px;" maxlength=20 value='{{ database.online_date|date:"Y-m-d H:i:s" }}' readonly= {{ readonly }} >
+
 </div>
 <br>
 <button type="button" class="btn btn-default btn" onclick="change_readonly('all')">

@@ -32,12 +32,9 @@
 	     	<td><a href="/resource/server_detail?server_id={{ server.id }}">{{ server.name }}</a></td>
 			<td><a href="/resource/server_detail?server_ip={{ server.ip }}">{{ server.ip }}</a></td>
 			<td> {{ server.os }} </td>
-			<td><a href="/resource/server_detail?user_id={{ server.owner }}">{{ server.owner }}</a></td>
+			<td><a href="/resource/user_detail?user_id={{ server.owner }}">{{ server.owner_name }}</a></td>
 			<td>{{ server.online_date }}</td>
 			<td> {{ server.stat }} </td>
-			<td>
-					<span class="glyphicon glyphicon-cog"></span> 
-			</td>
          </tr>
 	   {% endfor %}
      </tbody>
@@ -52,5 +49,4 @@
   <li><a href="#">5</a></li>
   <li><a href="#">&raquo;</a></li>
 </ul>
-<span class="glyphicon glyphicon-search"></span>
 {% endblock %}

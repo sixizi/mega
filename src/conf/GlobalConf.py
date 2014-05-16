@@ -1,0 +1,19 @@
+#default values
+DEFAULT_OS='Linux'
+DEFAULT_SERVER_OWNER=1
+DEFAULT_DB_OWNER=1
+DEFAULT_BUSI_OWNER=1
+DEFAULT_DB_PORT=3306
+#STAT
+STAT_ONLINE=1
+STAT_OFFLINE=0
+#TIME
+DATETIME_FORMATE="%Y-%m-%d %H:%M:%S"
+#messages
+MSG_ERR_IP='Invalid IP !'
+MSG_ERR_PORT='Invalid PORT !'
+MSG_ERR_LEVEL='Invalid LEVEL !'
+MSG_ERR_NAME='Invalid NAME !'
+MSG_ERR_INSTANCE_EXITST='Instance already exists !'
+MSG_ERR_BUSINESS_EXITST='Business already exists !'
+MSG_ERR_DB_EXITST='Database already exists !'
