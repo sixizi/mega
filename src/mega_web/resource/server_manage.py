@@ -3,6 +3,7 @@ from conf.GlobalConf import *
 from lib.utils import check_ip,is_int
 import datetime
 
+MSG_ERR_SERVER_NOT_EXITST='server does not exists!'
 class ServerManage():
     def __init__(self,server):
         self.server_id=server.get("server_id")
@@ -12,6 +13,9 @@ class ServerManage():
         self.server_owner=server.get("server_owner")
         self.server_os=server.get("server_os")
         self.msg=''
+        if not self.server_id:
+            self.server_id=ServerGet().get_server_by_ip(self.server_ip)
+        
     def data_check(self):
         if not self.server_ip or not check_ip(self.server_ip):
             self.msg+=MSG_ERR_IP
@@ -26,31 +30,38 @@ class ServerManage():
             self.server_owner=DEFAULT_SERVER_OWNER
         return True
     def add_server(self):
-        '''
-        server  a dict with server base info 
-        '''
         if not self.data_check():
             return False,self.msg
+        isexist=ServerGet().get_server_by_ip(self.server_ip)
+        if isexist:
+            return False,MSG_ERR_SERVER_EXITST
         server=Server(ip=self.server_ip,name=self.server_name,online_date=self.server_online,owner=self.server_owner,os=self.server_os)
         server.save()
-        return True    
+        return True,self.msg
     def mod_server(self):
+        if not self.server_id:
+            return False,MSG_ERR_SERVER_NOT_EXITST
         server=Server.objects.get(id=self.server_id)
-        server.name=self.server_name
-        server.ip=self.server_ip
-        server.os=self.server_os
-        server.owner=self.server_owner
-        server.online_date=self.server_online
+        if self.server_name:
+            server.name=self.server_name
+        if self.server_os:
+            server.os=self.server_os
+        if self.server_owner:
+            server.owner=self.server_owner
+        if self.server_online:
+            server.online_date=self.server_online
         server.save()
-        return True   
+        return True,self.msg
     def stat_server(self):
+        if not self.server_id:
+            return False,MSG_ERR_SERVER_NOT_EXITST
         server=Server.objects.get(id=self.server_id)
         if server.stat== STAT_OFFLINE:
             server.stat=STAT_ONLINE
         else:
             server.stat=STAT_OFFLINE
         server.save()
-        return True
+        return True,self.msg
     
 class ServerGet():
     def __init__(self):
@@ -78,7 +89,10 @@ class ServerGet():
             value=str_filter[1]
             result=self.server.objects.filter(column=value)[offset:count]
         else:
-            result=self.server.objects.all().order_by('-stat')[offset:count].values()
+            if count==0:
+                result=self.server.objects.all().order_by('-stat').values()
+            else:
+                result=self.server.objects.all().order_by('-stat')[offset:count].values()
         for r in result:
             r['online_date']=r["online_date"].strftime(DATETIME_FORMATE)   
             owner=User.objects.filter(id=r['owner']).values('name')[0]

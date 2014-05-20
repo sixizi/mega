@@ -28,7 +28,7 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Shanghai'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -115,6 +115,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+     'mega_web',
      'mega_web.entity',             
 #    'django.contrib.auth',
 #    'django.contrib.contenttypes',
@@ -136,23 +137,41 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s %(process)d %(thread)d %(message)s'
+        },
+        'detail': {
+            'format': '%(asctime)s %(levelname)s %(name)s %(message)s'
+        },
+        'message_only': {
+            'format': '%(asctime)s %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+        'track': {
+            'format': '%(asctime)s\t%(message)s'
+        },
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+        'api': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'formatter': 'simple',
+            'filename':  os.path.join(PROJECT_PATH, 'logs/api.log'),
         }
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': [],
             'level': 'ERROR',
             'propagate': True,
         },
-    }
+        'api': {
+            'handlers': ['api'],
+            'level': 'INFO',
+            'propagate': True,
+        }
+    },
 }

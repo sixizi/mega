@@ -1,3 +1,4 @@
+#log
 #default values
 DEFAULT_OS='Linux'
 DEFAULT_SERVER_OWNER=1
@@ -9,6 +10,13 @@ STAT_ONLINE=1
 STAT_OFFLINE=0
 #TIME
 DATETIME_FORMATE="%Y-%m-%d %H:%M:%S"
+
+#API 
+ERR_CODE_DEFAULT=None  #INIT CODE :Nonmeaning
+ERR_CODE_UNKOWN=-1  #UNKONW
+ERR_CODE_SUCCESS=0   #NO ERROR OCCUR
+ERR_CODE_INVALID=2
+
 #messages
 MSG_ERR_IP='Invalid IP !'
 MSG_ERR_PORT='Invalid PORT !'
@@ -17,3 +25,5 @@ MSG_ERR_NAME='Invalid NAME !'
 MSG_ERR_INSTANCE_EXITST='Instance already exists !'
 MSG_ERR_BUSINESS_EXITST='Business already exists !'
 MSG_ERR_DB_EXITST='Database already exists !'
+MSG_ERR_SERVER_EXITST='Server already exists !'
+

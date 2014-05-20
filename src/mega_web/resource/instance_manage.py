@@ -87,17 +87,19 @@ class InstanceGet():
         return result
     
     def get_instance_by_ip_port(self,ip,port=DEFAULT_DB_PORT):
-        result=None
-        result=self.inst.objects.filter(ip=ip,port=port).values("id")
+        result=0
+        result=self.inst.objects.filter(ip=ip,port=port).values("id")[0]
         return result
     def get_instance_list(self,str_filter,count=10,offset=0):
         result=None
-        sql="select i.* ,i.business_id,b.name as business,i.owner as owner_id,u.name as owner from instance i left join business b on i.business_id=b.id left join user u on i.owner=u.id;"
+        sql="select i.* ,i.business_id,b.name as business,i.owner as owner_id,u.name as owner from instance i left join business b on i.business_id=b.id left join user u on i.owner=u.id "
         if str_filter:
             column=str_filter[0]
             value=str_filter[1]
             sql+="and %s=%s"(column,value)
         sql+=" order by stat desc"
-        result=self.inst.objects.raw(sql)[offset:count]
-        
+        if count==0:
+            result=self.inst.objects.raw(sql)
+        else:
+            result=self.inst.objects.raw(sql)[offset:count]
         return result 

@@ -8,6 +8,7 @@
 * tests		测试代码及文档
 
 ##api
+接口规范
 ##docs
 ##lib
 ###DB
@@ -23,4 +24,8 @@ mega   主页
 
 ##scripts
 ##tests
+路径:tests/*
+####api
+* api_resource.py  资源池管理接口测试用例
+
   
