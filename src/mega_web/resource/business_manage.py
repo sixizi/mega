@@ -59,7 +59,7 @@ class BusinessGet():
         return result
     def get_business_by_name(self,name=''):
         if name:
-            result=self.busi.objects.filter(name=name).values("id")[0]
+            result=self.busi.objects.filter(name=name).values("id")
         else:
             result=''
         return result

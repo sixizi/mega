@@ -14,19 +14,21 @@ def test_getdata():
     ip=data[0]["ip"]
     data,errno=get_instance(model,ip,3306)
     report('Instance info',data,errno)
-    print data
+#    print data
     data,errno=get_database(model,ip,3306,'db1')
     report('database info',data,errno)
-    print data
+#    print data
     data,errno=get_server(model,ip)
     report('server info',data,errno)
-    print data
+#    print data
     errno =add_server('1.1.1.1',server_name='test1')
     report('add server','',errno)
     errno =mod_server('1.1.1.1',server_name='test2',server_os='unix')
     report('mod server','',errno)
     errno =del_server('1.1.1.2')
     report('del server','',errno)
+    errno =add_instance('2.2.2.2',3307,instance_name='test1')
+    report('add instance','',errno)
     
     #for d in data :
         #for e in d :

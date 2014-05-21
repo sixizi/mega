@@ -122,7 +122,7 @@ def get_instance(model=None,ip=None,port=3306):
     try:
         inst_id=instance_manage.InstanceGet().get_instance_by_ip_port(ip, port)
         if inst_id:
-            data=instance_manage.InstanceGet().get_instance_by_id(inst_id["id"])
+            data=instance_manage.InstanceGet().get_instance_by_id(inst_id[0]["id"])
             err_code=ERR_CODE_SUCCESS
             log.info("Get instance info success for %s %s:%s",model,ip,port)
         else:
@@ -151,7 +151,7 @@ def get_database(model=None,ip=None,port=3306,db=None):
     try:
         inst_id=instance_manage.InstanceGet().get_instance_by_ip_port(ip, port)
         if inst_id:
-            data=database_manage.DatabaseGet().get_database_unique(inst_id["id"], db)
+            data=database_manage.DatabaseGet().get_database_unique(inst_id[0]["id"], db)
             err_code=ERR_CODE_SUCCESS 
             log.info("Get database info success for %s %s:%s %s",model,ip,port,db)
    
@@ -261,15 +261,172 @@ def del_server(ip):
         log.error(ex)
     return err_code        
     
-def add_instance():
-    pass
-def mod_instance():
-    pass
-def del_instance():
-    pass
-def add_database():
-    pass
-def mod_database():
-    pass
-def del_database():
-    pass
+def add_instance(ip,port,**args):
+    """
+    Return an error code for the result of instance add. 0 means success
+    ip: instance ip 
+    port: instance port
+    args:instance_level  instance_name  instance_bussiness instance_online instance_owner instance_dbtype instance_hatype
+    
+    If the server does not exists ,a new server will be add automatic
+
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (ip or port):
+        return ERR_CODE_INVALID
+    try:
+        if len(args) == 0:
+            result,msg=instance_manage.InstanceManage({"instance_ip":ip,"instance_port":port}).add_instance()
+        else:
+            args["instance_ip"]=ip
+            args["instance_port"]=port
+            result,msg=instance_manage.InstanceManage(args).add_instance()
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Instance has been added: %s:%s ",ip,port)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Instance added failed: %s:%s %s",ip,port,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code
+            
+def mod_instance(ip,port,**args):
+    """
+    Return an error code for the result of server modify. 0 means success
+    ip: instance ip 
+    port: instance port
+    args:instance_level  instance_name  instance_bussiness instance_online instance_owner instance_dbtype instance_hatype
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (ip or port):
+        return ERR_CODE_INVALID
+    try:
+        if len(args)==0:
+            return ERR_CODE_INVALID
+        args["instance_ip"]=ip
+        args["instance_port"]=port
+        result,msg=instance_manage.InstanceManage(args).mod_instance()
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Instance modified success:%s %s",ip,port)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Instance modified failed: %s:%s %s",ip,port,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code
+
+    
+def del_instance(ip,port):
+    """
+    Return an error code for the result of instance del. 0 means success
+    ip : server ip 
+    port : instance port
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (ip or port):
+        return ERR_CODE_INVALID
+    try:
+        result,msg=instance_manage.ServerManage({"instance_ip":ip,"instance_port":port}).stat_server(True)
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Instance has been deleted:%s:%s",ip,port)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Instance deleted failed:%s:%s %s",ip,port,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code        
+    
+def add_database(db,ip,port,**args):
+    """  
+    Return an error code for the result of instance add. 0 means success
+    ip : server ip 
+    db: db name
+    port: instance port
+    args: server base info ,if not given ,default value will be used
+    keys:database_ip database_port database_name database_level database_owner database_business database_online
+
+    if the instance does not exists ,a new instance will be add automatic
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (db or ip or port) :
+        return ERR_CODE_INVALID
+    try:
+        if len(args)==0:
+            result,msg=database_manage.DatabaseManage({"database_name":db,"database_ip":ip,"database_port":port}).add_database()
+        else:
+            args["database_name"]=db
+            args["database_ip"]=ip
+            args["database_port"]=port
+            result,msg=database_manage.DatabaseManage(args).add_database()
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Database has been added:%s",ip)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Database added failed:%s %s",ip,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code
+    
+            
+def mod_database(ip,port,db,**args):
+    """
+    Return an error code for the result of database modify. 0 means success
+    ip : server ip 
+    db: db name
+    port: instance port
+    args: database base info ,if not given ,default value will be used
+        keys:database_ip database_port database_name database_level database_owner database_business database_online
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (ip or db or port):
+        return ERR_CODE_INVALID
+    try:
+        if len(args)==0:
+            return ERR_CODE_INVALID
+        else:
+            args["database_ip"]=ip
+            args["database_name"]=db
+            args["database_port"]=port
+            result,msg=database_manage.DatabaseManage(args).mod_database()
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Database modified success:%s",ip)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Database modified failed:%s %s",ip,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code
+def del_database(ip,port,db):
+    """
+    Return an error code for the result of database del. 0 means success
+    ip : server ip 
+    port : instance port
+    db: db name
+    """
+    err_code=ERR_CODE_DEFAULT
+    if not (ip or port or db):
+        return ERR_CODE_INVALID
+    try:
+        result,msg=database_manage.DatabaseManage({"database_ip":ip,"database_port":port,"database_name":db}).stat_database(True)
+        if result:
+            err_code=ERR_CODE_SUCCESS
+            log.info("Database has been deleted:%s:%s %s",ip,port,db)
+        else:
+            err_code=ERR_CODE_UNKOWN
+            log.error("Database deleted failed:%s:%s %s %s",ip,port,db,msg)
+    except Exception as ex:
+        err_code=ERR_CODE_UNKOWN
+        log.error(ex)
+    return err_code        
+    
+    

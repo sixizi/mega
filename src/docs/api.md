@@ -127,10 +127,76 @@
 
     ip : server ip 
  
+* def add_instance(ip,port,**args):
   
-* def add_instance():
-* def mod_instance():
-* def del_instance():
-* def add_database():
-* def mod_database():
-* def del_database():
+    Return an error code for the result of instance add. 0 means success
+  
+    ip: instance ip 
+  
+    port: instance port
+  
+    args:
+    	
+    	instance_level  instance_name  instance_bussiness instance_online instance_owner instance_dbtype instance_hatype
+    
+    If the server does not exists ,a new server will be add automatic
+* def mod_instance(ip,port,**args):
+
+	Return an error code for the result of server modify. 0 means success
+
+    ip: instance ip 
+
+    port: instance port
+
+    args:
+    	
+    	instance_level  instance_name  instance_bussiness instance_online instance_owner instance_dbtype instance_hatype
+* def del_instance(ip,port):
+  
+    Return an error code for the result of instance del. 0 means success
+  
+    ip : server ip 
+  
+    port : instance port
+* def add_database(db,ip,port,**args):
+ 
+    Return an error code for the result of instance add. 0 means success
+ 
+    ip : server ip 
+ 
+    db: db name
+ 
+    port: instance port
+ 
+    args: server base info ,if not given ,default value will be used
+
+    keys:
+    
+    	database_ip database_port database_name database_level database_owner database_business database_online
+
+    if the instance does not exists ,a new instance will be add automatic
+* def mod_database(ip,port,db,**args):
+  
+    Return an error code for the result of database modify. 0 means success
+  
+    ip : server ip 
+  
+    db: db name
+  
+    port: instance port
+  
+    args: database base info ,if not given ,default value will be used
+    
+    keys:
+    
+    	database_ip database_port database_name database_level database_owner database_business database_online
+   
+* def del_database(ip,port,db):
+
+    Return an error code for the result of database del. 0 means success
+
+    ip : server ip 
+
+    port : instance port
+
+    db: db name

@@ -52,14 +52,17 @@ class ServerManage():
             server.online_date=self.server_online
         server.save()
         return True,self.msg
-    def stat_server(self):
+    def stat_server(self,action=None):
         if not self.server_id:
             return False,MSG_ERR_SERVER_NOT_EXITST
         server=Server.objects.get(id=self.server_id)
-        if server.stat== STAT_OFFLINE:
-            server.stat=STAT_ONLINE
-        else:
+        if action:
             server.stat=STAT_OFFLINE
+        else:
+            if server.stat== STAT_OFFLINE:
+                server.stat=STAT_ONLINE
+            else:
+                server.stat=STAT_OFFLINE
         server.save()
         return True,self.msg
     

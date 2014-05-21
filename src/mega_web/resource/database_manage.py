@@ -1,10 +1,11 @@
 import datetime
 from mega_web.entity.models import Database,Business,User,Instance
-from instance_manage import InstanceGet 
+from instance_manage import InstanceGet,InstanceManage
 from conf.GlobalConf import * 
 from lib.utils import check_ip,is_int
 from business_manage import BusinessGet
 
+MSG_ERR_DATABASE_NOT_EXITST="Database does not exists!"
 class DatabaseManage():
     def __init__(self,database):
         self.db_id=database.get("database_id")    
@@ -16,19 +17,29 @@ class DatabaseManage():
         self.db_ip=database.get("database_ip")
         self.db_port=database.get("database_port")
         self.db_online=database.get("database_online")
+        if not self.db_instance:
+            self.db_instance=InstanceGet().get_instance_by_ip_port(self.db_ip, self.db_port)
+        if not self.db_id:
+            self.db_id=DatabaseGet().get_database_unique(self.db_instance, self.db_name)
         self.msg=''
     def data_check(self):
         if not self.db_name:
             self.msg+=MSG_ERR_NAME
             return False
-        if not self.db_level:
-            self.msg+=MSG_ERR_LEVEL
+        if not self.db_ip:
+            self.msg+=MSG_ERR_IP
             return False
         if is_int(self.db_port):
             self.msg+=MSG_ERR_PORT
             return False
+        if not self.db_level:
+            self.db_level=DEFAULT_LEVEL
         if not self.db_online:
             self.db_online=datetime.datetime.now()
+        if not self.db_business:
+            self.db_business=DEFAULT_BUSINESS
+        if not self.db_owner:
+            self.db_owner=DEFAULT_OWNER
 
         return True  
     def add_database(self):
@@ -37,40 +48,45 @@ class DatabaseManage():
         '''
         if not self.data_check():
             return False,self.msg
-        db_instance=self.db_instance
-        db_level=self.db_level
-        db_name=self.db_name
-        db_owner=self.db_owner
-        db_bussiness=self.db_business
-#get the owner id
-        owner_id=DEFAULT_DB_OWNER
-        
-        is_exist=DatabaseGet().check_database_unique(db_instance,db_name)
+        is_exist=DatabaseGet().check_database_unique(self.db_instance,self.db_name)
         if is_exist:
             self.msg=MSG_ERR_DB_EXITST
             return False,self.msg
-        db=Database(instance_id=db_instance,name=db_name,business_id=db_bussiness,level=db_level,owner=owner_id,online_date=self.db_online)
+        if not self.db_instance:
+            InstanceManage({"instance_ip":self.db_ip,"instance_port":self.db_port}).add_instance()
+        instance_id=InstanceGet().get_instance_by_ip_port(self.db_ip, self.db_port)
+        db=Database(instance_id=instance_id,name=self.db_name,business_id=self.db_business,level=self.db_level,owner=self.db_owner,online_date=self.db_online)
         db.save()
         self.msg='Sucess'
         return True,self.msg
     def mod_database(self):
+        if not self.db_id:
+            return MSG_ERR_DATABASE_NOT_EXITST
         db=Database.objects.get(id=self.db_id)
         db.instance_id=InstanceGet().get_instance_by_ip_port(self.db_ip, self.db_port).get("id")
-        db.ip=self.db_ip
-        db.level=self.db_level
-        db.port=self.db_port
-        db.name=self.db_name
-        db.onwer=self.db_owner
-        db.business_id=BusinessGet().get_business_by_name(self.db_business).get("id")
-        db.online_date=self.db_online
+
+#        db.ip=self.db_ip
+#        db.port=self.db_port
+#        db.name=self.db_name        
+        if self.db_level:
+            db.level=self.db_level
+        if self.db_owner:
+            db.onwer=self.db_owner
+        if self.db_business:
+            db.business_id=BusinessGet().get_business_by_name(self.db_business).get("id")
+        if self.db_online:
+            db.online_date=self.db_online
         db.save()
         return True
-    def stat_database(self):
+    def stat_database(self,action=None):
         db=Database.objects.get(id=self.db_id)
-        if db.stat==STAT_ONLINE:
+        if action:
             db.stat=STAT_OFFLINE
         else:
-            db.stat=STAT_ONLINE
+            if db.stat==STAT_ONLINE:
+                db.stat=STAT_OFFLINE
+            else:
+                db.stat=STAT_ONLINE
         db.save()
         return True
 class DatabaseGet():
