@@ -27,7 +27,7 @@ class ServerManage():
         if not self.server_os:
             self.server_os=DEFAULT_OS
         if not self.server_owner:
-            self.server_owner=DEFAULT_SERVER_OWNER
+            self.server_owner=DEFAULT_OWNER
         return True
     def add_server(self):
         if not self.data_check():
@@ -52,7 +52,7 @@ class ServerManage():
             server.online_date=self.server_online
         server.save()
         return True,self.msg
-    def stat_server(self,action=None):
+    def stat_server(self,action=False):
         if not self.server_id:
             return False,MSG_ERR_SERVER_NOT_EXITST
         server=Server.objects.get(id=self.server_id)

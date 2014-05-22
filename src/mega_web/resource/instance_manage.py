@@ -94,12 +94,17 @@ class InstanceManage():
             inst.owner=self.inst_owner
         inst.save()
         return True,self.msg
-    def stat_instance(self):
+    def stat_instance(self,action=False):
+        if not self.inst_id:
+            return False,MSG_ERR_INSTANCE_NOT_EXITST
         inst=Instance.objects.get(id=self.inst_id)
-        if inst.stat==STAT_ONLINE:
+        if action:
             inst.stat=STAT_OFFLINE
         else:
-            inst.stat=STAT_ONLINE
+            if inst.stat==STAT_ONLINE:
+                inst.stat=STAT_OFFLINE
+            else:
+                inst.stat=STAT_ONLINE
         inst.save()
         return True,self.msg
 class InstanceGet():

@@ -72,7 +72,7 @@
   
     port: port(default 3306)
  
-* def get_database_by_name_instance(model=None,ip=None,port=3306,db=None):
+* def get_database(model=None,ip=None,port=3306,db=None):
 
     Return a dict of database data and an error code
 
@@ -88,7 +88,7 @@
 
     db :  name of database
 
-* def get_server_by_ip(model=None,ip=None):
+* def get_server(model=None,ip=None):
   
     Return a dict of server data and an error code
   

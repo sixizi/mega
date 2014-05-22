@@ -2,7 +2,7 @@ from mega_web.resource import instance_manage,server_manage,database_manage
 import logging
 log = logging.getLogger("api")
 
-ERR_CODE_DEFAULT=None  #INIT CODE :Nonmeaning
+ERR_CODE_DEFAULT=None  #INIT CODE :Noenmeaning
 ERR_CODE_UNKOWN=-1  #UNKONW ERROR
 ERR_CODE_SUCCESS=0   #NO ERROR OCCUR
 ERR_CODE_INVALID=2   #INVALID ARGUMENTS
@@ -132,6 +132,7 @@ def get_instance(model=None,ip=None,port=3306):
         err_code=ERR_CODE_UNKOWN
         log.error(ex)
     return data,err_code
+    
 
 def get_database(model=None,ip=None,port=3306,db=None):
     """
@@ -330,7 +331,7 @@ def del_instance(ip,port):
     if not (ip or port):
         return ERR_CODE_INVALID
     try:
-        result,msg=instance_manage.ServerManage({"instance_ip":ip,"instance_port":port}).stat_server(True)
+        result,msg=instance_manage.InstanceManage({"instance_ip":ip,"instance_port":port}).stat_instance(True)
         if result:
             err_code=ERR_CODE_SUCCESS
             log.info("Instance has been deleted:%s:%s",ip,port)
@@ -342,7 +343,7 @@ def del_instance(ip,port):
         log.error(ex)
     return err_code        
     
-def add_database(db,ip,port,**args):
+def add_database(ip,port,db,**args):
     """  
     Return an error code for the result of instance add. 0 means success
     ip : server ip 

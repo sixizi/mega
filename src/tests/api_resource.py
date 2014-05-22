@@ -7,6 +7,7 @@ def test_getdata():
     model='test'
     data,errno=get_all_instance(model)
     report('All instance list',data,errno)
+#    print data,type(data)
     data,errno=get_all_server(model)
     report('All server list',data,errno)
     data,errno=get_all_db(model)
@@ -29,6 +30,16 @@ def test_getdata():
     report('del server','',errno)
     errno =add_instance('2.2.2.2',3307,instance_name='test1')
     report('add instance','',errno)
+    errno =mod_instance('2.2.2.2',3307,instance_name='test2')
+    report('mod instance','',errno)
+    errno =del_instance('2.2.2.2',3307)
+    report('del instance','',errno)
+    errno =add_database('2.2.2.2',3307,'testdb')
+    report('add database','',errno)
+    errno =mod_database('2.2.2.2',3307,'testdb',database_level=11)
+    report('mod database','',errno)
+    errno =del_database('2.2.2.2',3307,'testdb')
+    report('del database','',errno)
     
     #for d in data :
         #for e in d :
