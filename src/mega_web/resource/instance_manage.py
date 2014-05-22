@@ -132,11 +132,10 @@ class InstanceGet():
     def get_instance_list(self,str_filter,count=10,offset=0):
         result=None
         sql="select i.* ,i.business_id,b.name as business,i.owner as owner_id,u.name as owner from instance i left join business b on i.business_id=b.id left join user u on i.owner=u.id "
-        if str_filter:
-            column=str_filter[0]
-            value=str_filter[1]
-            sql+="and %s=%s"(column,value)
-        sql+=" order by stat desc"
+        if len(str_filter):
+            for f in str_filter:
+                sql+=" and %s=%s" % (f,str_filter[f])
+        sql+=" order by i.stat desc"
         if count==0:
             result=self.inst.objects.raw(sql)
         else:

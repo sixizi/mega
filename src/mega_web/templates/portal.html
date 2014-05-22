@@ -1,15 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="list-group">
-  <a href="http://erp.jd.com/index.tpsml" class="list-group-item ">
-    <h4 class="list-group-item-heading">ERP</h4>
-    <p class="list-group-item-text">...</p>
-  </a>
-<div class="list-group">
-  <a href="#" class="list-group-item ">
-    <h4 class="list-group-item-heading">List group item heading</h4>
-    <p class="list-group-item-text">...</p>
-  </a>
+
+<br>
+<div>  
+<form action="http://203.208.46.145/search" method="get" target="_blank">  
+<input type="text" name="q" size="20" maxlength="255" value="" />  
+<input type="submit" name="btnG" value="Google" />  不一样的google哦 ：）
+</form>  
 </div>
-</div>
+
+<br>
+<br>
+  <a href="http://erp.jd.com/index.tpsml" target="_blank" style="width:250px;height:10px;" >
+  <img border=0 src="/static/img/port-erp.png">
+  </a>
+<br>
+<br>
+<a href="https://192.168.128.89/" target="_blank" style="width:250px;">	
+  <img border=0 src="/static/img/port-control.png">堡垒机
+</a>
+<br>
+<br>
+<a href="http://10.45.241.159:8080/confluence/pages/viewpage.action?pageId=852056" target="_blank" style="width:250px;">	
+  <img border=0 src="/static/img/port-wiki.png">wiki
+</a>
+  
 {% endblock %}

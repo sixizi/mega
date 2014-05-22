@@ -7,7 +7,7 @@ ERR_CODE_UNKOWN=-1  #UNKONW ERROR
 ERR_CODE_SUCCESS=0   #NO ERROR OCCUR
 ERR_CODE_INVALID=2   #INVALID ARGUMENTS
 
-def get_all_instance(model=None,stat=0,count=0):
+def get_all_instance(model=None,stat=0,count=0,role=None):
     """
         return all instance object as a list of  dicts
     and an error code sign the result, 0 means success
@@ -18,17 +18,21 @@ def get_all_instance(model=None,stat=0,count=0):
             1 only the online instance 
             2 only the offline instances
     count: counts of instances for return ,default 0(all)
-    
+    role : 1 get the master list
+            >1 get the slave list
     """
     err_code=ERR_CODE_DEFAULT
     result=[]
+    filter={}
+    if stat == 1:
+        filter['i.stat']=1
+    if stat == 2:
+        filter['i.stat']=0
+    if role == 1:
+        filter['i.role']=1
+    if role >1:
+        filter['i.role']=2            
     try :
-        if stat ==1:
-            filter='stat=1'
-        elif stat==2:
-            filter='stat=0'
-        else:
-            filter=None            
         data=instance_manage.InstanceGet().get_instance_list(filter,count)
         if data:
             for d in data:

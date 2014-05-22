@@ -28,6 +28,8 @@ class Instance(models.Model):
     db_type = models.CharField(max_length=10)
     #none mha mmm keepalived
     ha_type = models.CharField(max_length=10)
+    #1 master >1 slave
+    role= models.IntegerField(default=1)
     
     stat= models.IntegerField(default=1)
     online_date = models.DateTimeField(default=0)

@@ -5,7 +5,7 @@ from apis.resource import *
 
 def test_getdata():
     model='test'
-    data,errno=get_all_instance(model)
+    data,errno=get_all_instance(model,stat=1,role=2)
     report('All instance list',data,errno)
 #    print data,type(data)
     data,errno=get_all_server(model)
