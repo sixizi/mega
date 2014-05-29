@@ -1,4 +1,8 @@
+#bool
 #log
+#Service
+DEFAULT_TCP_PORT=5527
+DEFAULT_TCP_HOST=''
 #default values
 DEFAULT_OS='Linux'
 DEFAULT_LEVEL=1
