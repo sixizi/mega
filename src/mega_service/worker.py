@@ -1,6 +1,5 @@
 import time
 import multiprocessing
-import json as simplejson
 
 class Worker():
     def __init__(self,queue):
@@ -25,11 +24,12 @@ class Worker():
     def work_resolve(self,data):
         """        work instance:{'HEAD':'MEGA','TYPE':'CMD','VALUE':'ls'}
         keys:
-            HEAD
-            TYPE
-            VALUE
-            TIME
-            REPEAT            
+            HEAD:    for safe interactive,should be MEGA
+            TYPE:    cmd,task,other
+            VALUE:   what to do : ls
+            TIME:    when to do : 0 once  ,
+            CYCLE:  lifecycle of job   day,week,month
+            TARGET:    unique identify for server or instance or database.
         """
         if len(data)==0:
             return False
@@ -45,11 +45,39 @@ class Worker():
                 return False
         except Exception as ex:
             print ex    
+        self.task=d
         return True
         
     def work_deliver(self,work):
-        if self.work_resolve(work):
+    #1.run the command
+    #2.save task into db
+        if not self.work_resolve(work):
+            return False
+        #real time job
+        if self.task.get('TIME')=='0':
+        #subthread
+            result=Executor()
+        else:
+        #save into db
             pass
-    
     def close(self):
         self.close()
+
+class Executor():
+    '''
+     Run the task on the remote server in subprocess
+    '''
+    def __init__(self):
+        pass
+    def run(self):
+        pass
+    def salt_loader(self):
+        pass
+class Saver():
+    '''
+    save task into database if it need to be rerun  
+    '''
+    def __init__(self):
+        pass
+    def run(self):
+        pass

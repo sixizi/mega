@@ -31,6 +31,19 @@ mega   主页
 管理    资源管理
 
 调度
+##mega_service
+TCP 通信数据包规范：
+
+        """        work instance:{'HEAD':'MEGA','TYPE':'CMD','VALUE':'ls'}
+        keys:
+            HEAD:    for safe interactive,should be MEGA
+            TYPE:    cmd,task,other
+            VALUE:   what to do : ls
+            TIME:    when to do : 0 once  ,
+            REPEAT:  lifecycle of job   day,week,month
+            TARGET:    uniqeu identify for server or instance or database.
+        """
+
 
 ##scripts
 ##tests

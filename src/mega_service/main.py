@@ -2,8 +2,6 @@ import multiprocessing
 from listener import tcp_server
 from worker import Worker 
 
-
-
 def sub_process():
     global queue
     queue = multiprocessing.Queue()
